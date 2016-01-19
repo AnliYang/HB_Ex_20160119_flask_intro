@@ -16,7 +16,18 @@ AWESOMENESS = [
 def start_here():
     """Home page."""
 
-    return "Hi! This is the home page."
+    return """
+    <!doctype html>
+    <html>
+      <head>
+        <title>Home page.</title>
+      </head>
+      <body>
+        <h1>Hi! This is the home page.</h1>
+        <a href="/hello">Hello!</a>
+      </body>
+    </html>
+    """
 
 
 @app.route('/hello')
@@ -31,8 +42,39 @@ def say_hello():
       </head>
       <body>
         <h1>Hi There!</h1>
-        <form action="/greet">
+        <form action="/greet" method="POST">
           <label>What's your name? <input type="text" name="person"></label>
+          <br>
+          <label>Select a compliment:</label>
+          <br>
+          <input type="radio" name="greeting" value="awesome">You are awesome!</input>
+          <br> 
+          <input type="radio" name="greeting" value="terrific">You are terrific!</input>
+          <br>
+          <input type="radio" name="greeting" value="fantastic">You are fantastic!</input>
+          <br>
+          <input type="radio" name="greeting" value="neato">You are neato!</input>
+          <br>
+          <input type="radio" name="greeting" value="fantabulous">You are fantabulous!</input>
+          <br>
+          <input type="radio" name="greeting" value="wowza">You are wowza!</input>
+          <br>
+          <input type="radio" name="greeting" value="oh-so-not-meh">You are oh-so-not-meh!</input>
+          <br>
+          <input type="radio" name="greeting" value="brilliant">You are brilliant!</input>
+          <br>
+          <input type="radio" name="greeting" value="ducky">You are ducky!</input>
+          <br>
+          <input type="radio" name="greeting" value="coolio">You are coolio!</input>
+          <br>
+          <input type="radio" name="greeting" value="incredible">You are incredible!</input>
+          <br>
+          <input type="radio" name="greeting" value="wonderful">You are wonderful!</input>
+          <br>
+          <input type="radio" name="greeting" value="smashing">You are smashing!</input>
+          <br>
+          <input type="radio" name="greeting" value="lovely">You are lovely!</input>
+          <br>
           <input type="submit">
         </form>
       </body>
@@ -40,13 +82,13 @@ def say_hello():
     """
 
 
-@app.route('/greet')
+@app.route('/greet', methods=['post'])
 def greet_person():
     """Get user by name."""
 
-    player = request.args.get("person")
+    player = request.form.get("person")
 
-    compliment = choice(AWESOMENESS)
+    compliment = request.form.get('greeting')
 
     return """
     <!doctype html>
@@ -64,4 +106,4 @@ def greet_person():
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads"
     # our web app if we change the code.
-    app.run(debug=True)
+    app.run(debug=False)
